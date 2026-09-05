@@ -1,0 +1,10 @@
+Fecha/Hora: 2026-08-20T21:11:59.593Z - Ruta accedida: /
+Fecha/Hora: 2026-08-20T21:11:59.708Z - Ruta accedida: /favicon.ico
+Fecha/Hora: 2026-08-20T21:12:04.150Z - Ruta accedida: /status
+Fecha/Hora: 2026-09-02T23:42:56.959Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-02T23:46:19.952Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-02T23:47:32.084Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-02T23:57:49.418Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-02T23:58:07.738Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-03T00:00:14.814Z - Ruta accedida: /usuarios/2
+Fecha/Hora: 2026-09-03T00:01:14.341Z - Ruta accedida: /usuarios/1
