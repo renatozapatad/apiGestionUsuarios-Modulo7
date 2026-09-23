@@ -10,7 +10,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 const Usuario = sequelize.define('usuario', {
     nombre: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, unique: true },
-    password: { type: DataTypes.STRING }
+    password: { type: DataTypes.STRING },
+    foto: { type: DataTypes.STRING }
 });
 
 const Pedido = sequelize.define('pedido', {

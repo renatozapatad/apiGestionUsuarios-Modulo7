@@ -8,3 +8,15 @@ Fecha/Hora: 2026-09-02T23:57:49.418Z - Ruta accedida: /usuarios
 Fecha/Hora: 2026-09-02T23:58:07.738Z - Ruta accedida: /usuarios
 Fecha/Hora: 2026-09-03T00:00:14.814Z - Ruta accedida: /usuarios/2
 Fecha/Hora: 2026-09-03T00:01:14.341Z - Ruta accedida: /usuarios/1
+Fecha/Hora: 2026-09-23T22:39:10.847Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-23T22:40:17.909Z - Ruta accedida: /usuarios/login
+Fecha/Hora: 2026-09-23T22:42:02.970Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-23T22:43:09.303Z - Ruta accedida: /usuarios
+Fecha/Hora: 2026-09-23T22:45:34.659Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:45:55.599Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:47:42.342Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:50:04.902Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:51:51.384Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:54:02.648Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:56:37.062Z - Ruta accedida: /usuarios/1/foto
+Fecha/Hora: 2026-09-23T22:58:38.324Z - Ruta accedida: /usuarios/1/foto

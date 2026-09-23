@@ -1,48 +1,50 @@
-# Proyecto API de Usuarios - Node y Express
+# API RESTful - Gestion de Usuarios (Modulo 8)
 
-Este es mi proyecto integrador para el bootcamp Full Stack. Empezo en el modulo 6 como un servidor basico y ahora en el modulo 7 le sume la conexion a una base de datos PostgreSQL para gestionar usuarios y pedidos.
+Proyecto integrador del bootcamp de ISEG. API RESTful segura, conectada a PostgreSQL mediante Sequelize, con sistema de autenticacion JWT y subida de archivos vinculada a la base de datos.
 
-Requisitos previos:
-- Node.js (version 18 o mayor)
-- PostgreSQL y pgAdmin 4 instalados
-- Postman para probar las nuevas rutas
+## Instalacion
 
-## Como instalar y correr el proyecto
+1. Clonar el repositorio e instalar dependencias:
+npm install
 
-1. Clona este repositorio y metete a la carpeta del proyecto en tu terminal.
-2. Instala los paquetes necesarios corriendo: 
-   `npm install`
-3. Crea un archivo `.env` en la raiz. Aca tienes que configurar el puerto y tus credenciales de la base de datos asi:
-   PORT=3000
-   DB_NAME=gestion_usuarios
-   DB_USER=postgres
-   DB_PASS=tu_clave_de_postgres
-   DB_HOST=localhost
-4. Abre pgAdmin y crea una base de datos vacia que se llame exactamente `gestion_usuarios`.
-5. Levanta el server en modo desarrollo (se actualiza solo al guardar cambios): 
-   `npm run dev`
-   (Sequelize va a crear las tablas por su cuenta al iniciar, no tienes que hacer nada extra).
+2. Configurar las variables de entorno creando un archivo .env:
+PORT=3000
+DB_NAME=gestion_usuarios
+DB_USER=postgres
+DB_PASS=tu_clave_de_postgres
+DB_HOST=localhost
+JWT_SECRET=tu_clave_secreta
 
-## Rutas disponibles
+3. Iniciar el servidor:
+npm run dev
 
-Rutas basicas del modulo 6 (se pueden abrir en el navegador):
-- `http://localhost:3000/` : Mensaje de bienvenida (servido desde la carpeta public).
-- `http://localhost:3000/status` : Muestra que el servidor esta funcionando bien.
+## Estructura de Endpoints
 
-Rutas de base de datos del modulo 7 (para probar en Postman):
-- `POST /usuarios` : Crea un usuario y le asigna un "Kit Inicial" al mismo tiempo usando una transaccion.
-- `GET /usuarios` : Trae la lista de usuarios. Oculta las contraseñas por seguridad y trae los pedidos asociados.
-- `PUT /usuarios/:id` : Sirve para modificar los datos de un usuario existente.
-- `DELETE /usuarios/:id` : Elimina al usuario de la base de datos.
+* Rutas Publicas:
+  * POST /usuarios : Registra un usuario nuevo (encripta la clave con bcrypt) y crea su Pedido inicial mediante una transaccion.
+  * POST /usuarios/login : Autenticacion de usuario. Devuelve el token JWT.
 
-## Logs del sistema
-Cada vez que visitas una pagina, el programa anota la fecha, hora y ruta en el archivo `logs/log.txt` gracias a un middleware personalizado.
+* Rutas Privadas (Requieren JWT en el header Authorization: Bearer <token>):
+  * GET /usuarios : Lista todos los usuarios y sus pedidos asociados.
+  * PUT /usuarios/:id : Actualiza la informacion de un usuario.
+  * DELETE /usuarios/:id : Elimina un usuario de la base de datos.
+  * POST /usuarios/:id/foto : Sube una imagen de perfil usando Multer (form-data con la key "imagen").
 
-## Decisiones y notas tecnicas
+## Justificaciones Tecnicas (Requerimientos Modulo 8)
 
-- app.js: elegi este nombre como archivo principal porque representa el inicio de la app express.
-- Estructura: cree carpetas como /routes, /controllers, /models, /middlewares y /public para mantener el codigo ordenado y modular, lo que me facilito mucho integrar la base de datos despues.
-- Archivos estaticos: use la carpeta public con express.static() para servir el html.
-- ORM (Sequelize): decidi usarlo porque me parecio mucho mas comodo que escribir SQL a mano, sobre todo para manejar la relacion 1 a muchos entre usuarios y pedidos.
-- Transacciones: use `sequelize.transaction()` en el POST. Asi me aseguro de que si falla la creacion del pedido o del usuario, se hace un rollback automatico y no queda informacion a medias.
-- Validaciones: le agregue chequeos simples al PUT y DELETE para confirmar que el ID del usuario realmente exista antes de intentar hacerle cambios.
+¿Como decidiste separar tus rutas y controladores?
+Opte por una arquitectura modular separando las responsabilidades. Las rutas solo definen los endpoints y los verbos HTTP, mientras que delegan toda la logica de negocio a los controladores. Esto mantiene el codigo limpio y mejora la escalabilidad de la API.
+
+¿Que validaciones realizaste antes de insertar/modificar datos?
+- En el registro, se implemento bcrypt para encriptar las claves y no guardarlas en texto plano.
+- En los metodos PUT, DELETE y al subir la foto, se valida primero que el usuario realmente exista en la base de datos usando findByPk. Si no existe, devuelve un error 404.
+- En la subida de archivos, Multer filtra la extension y el mimetype para aceptar unicamente imagenes (jpg, png, gif) y limita el peso del archivo a 2MB para evitar sobrecargar el servidor.
+
+¿Por que decidiste proteger esas rutas?
+Decidi proteger los metodos GET, PUT, DELETE y la subida de fotos porque son acciones que exponen o alteran informacion sensible de la base de datos. El registro y el login deben quedar publicos obligatoriamente para que los usuarios puedan ingresar al sistema por primera vez.
+
+¿Donde y como almacenas el token?
+El token se genera en el backend con jsonwebtoken y se configura con una expiracion de 1 hora por seguridad. Este token se envia como respuesta JSON al cliente. Queda bajo la responsabilidad del frontend almacenar este token (por ejemplo en el LocalStorage del navegador) y enviarlo de vuelta en los headers de las proximas peticiones.
+
+Tarea PLUS: Asociacion de Archivos
+La subida de archivos guarda la imagen fisicamente en la carpeta /public/uploads, pero ademas toma la ruta generada y actualiza dinamicamente el campo "foto" del usuario en la base de datos de PostgreSQL.
